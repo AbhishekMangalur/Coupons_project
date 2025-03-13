@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Your Coupon</title>
+
+    <style>
+        /* Background & General Styles */
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 800px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Claim Button Styling */
+        .btn-claim {
+            background: #ffcc00;
+            color: black;
+            font-size: 18px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-claim:hover {
+            background: #ff9900;
+        }
+
+        /* Response Message Styling */
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .error {
+            background: #FF5733;
+            color: white;
+        }
+
+        h1 {
+            font-size: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎟️ Claim Your Coupon 🎟️</h1>
+        <p class="lead">Click the button below to get your exclusive coupon!</p>
+        <button id="claim-btn" class="btn-claim">Claim Now</button>
+        <p id="response" class="message"></p>
+    </div>
+
+    <script>
+        document.getElementById('claim-btn').addEventListener('click', function() {
+            fetch('/claim/')
+                .then(response => response.json())
+                .then(data => {
+                    let responseText = document.getElementById('response');
+                    responseText.classList.remove("success", "error");
+                    if (data.success) {
+                        responseText.innerHTML = data.success;
+                        responseText.classList.add("success");
+                    } else {
+                        responseText.innerHTML = data.error;
+                        responseText.classList.add("error");
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
